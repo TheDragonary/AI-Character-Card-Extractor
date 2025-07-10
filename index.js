@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const extractChunks = require('png-chunks-extract');
 const PNGtext = require('png-chunk-text');
 const atob = require('atob');
@@ -25,3 +26,7 @@ if (!character) {
 const decodedString = atob(character);
 const metadata = JSON.parse(decodedString);
 console.log(metadata);
+
+const baseName = path.basename(image, path.extname(image));
+const outputFilePath = path.join(path.dirname(image), `${baseName}.json`);
+fs.writeFileSync(outputFilePath, JSON.stringify(metadata, null, 2), 'utf-8');
