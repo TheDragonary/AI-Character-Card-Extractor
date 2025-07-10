@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "atob": "^2.1.2",
+    "png-chunk-text": "^1.0.0",
+    "png-chunks-extract": "^1.0.0"
+  }
+}
