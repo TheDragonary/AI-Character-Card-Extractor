@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const extractChunks = require('png-chunks-extract');
 const PNGtext = require('png-chunk-text');
-const atob = require('atob');
 
 const image = process.argv[2];
 const buffer = fs.readFileSync(image);
@@ -23,10 +22,10 @@ if (!character) {
     throw new Error('Character card metadata not found in PNG.');
 }
 
-const decodedString = atob(character);
+const decodedString = Buffer.from(character, 'base64').toString('utf-8');
 const metadata = JSON.parse(decodedString);
 console.log(metadata);
 
 const baseName = path.basename(image, path.extname(image));
 const outputFilePath = path.join(path.dirname(image), `${baseName}.json`);
-fs.writeFileSync(outputFilePath, JSON.stringify(metadata, null, 2), 'utf-8');
+fs.writeFileSync(outputFilePath, JSON.stringify(metadata, null, 4), 'utf-8');
